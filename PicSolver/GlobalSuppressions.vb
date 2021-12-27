@@ -5,5 +5,5 @@
 
 Imports System.Diagnostics.CodeAnalysis
 
-<Assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>", Scope:="member", Target:="~M:PicSolver.Map.LoadFromIamge(System.String)")>
-<Assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>", Scope:="member", Target:="~M:PicSolver.Map.SaveSoultion(System.String)")>
+<Assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>", Scope:="member", Target:="~M:MazePicSolver.Map.LoadFromIamge(System.String)")>
+<Assembly: SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>", Scope:="member", Target:="~M:MazePicSolver.Map.SaveSoultion(System.String)")>
