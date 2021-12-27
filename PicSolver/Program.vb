@@ -9,8 +9,9 @@ Module Program
         If args.Length < 1 Then
             Console.WriteLine("Picture needs to be a argument")
         End If
-        Dim map = New Map(String.Join(" ", args))
-        map.SaveSoultion("D:\ourPicSol.png")
+        Dim path As String = String.Join(" ", args)
+        Dim map = New Map(path)
+        map.SaveSoultion(String.Join("\", path.Split("\").Take(path.Split("\").Length - 1)) + "\" + "solution.png")
 
         For x As Integer = 0 To map.Size.Width - 1
             For y As Integer = 0 To map.Size.Height - 1

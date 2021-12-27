@@ -23,7 +23,7 @@ Class Map
     Private Sub LoadFromIamge(ByVal imagePath As String)
         Using image = New Bitmap(imagePath)
             Dots = Enumerable.Range(0, image.Size.Width).Select(Function(t) New Dot(image.Size.Height - 1) {}).ToArray()
-            Dim func As Action(Of Integer, Integer) = Function(x, y)
+            Dim func As Action(Of Integer, Integer) = Sub(x, y)
                                                           If image.GetPixel(x, y).R = 0 And image.GetPixel(x, y).G = 0 And image.GetPixel(x, y).B = 0 Then
                                                               Dots(x)(y) = New Dot(True, New Point(x, y))
                                                           ElseIf image.GetPixel(x, y).G > 0 And image.GetPixel(x, y).R < 255 And image.GetPixel(x, y).G <= 255 Then
@@ -33,7 +33,7 @@ Class Map
                                                           Else
                                                               Dots(x)(y) = New Dot(False, New Point(x, y))
                                                           End If
-                                                      End Function
+                                                      End Sub
             IterateThroughMap(func)
         End Using
     End Sub
@@ -108,32 +108,29 @@ Class Map
     End Sub
 
     Public Function GetAroundDot(ByRef pos As Point) As List(Of Point)
-        Dim maxX = Dots.Length
-        Dim maxY = Dots.First().Length
-        Dim moves = New List(Of Point)() From {New Point(pos.X - 1, pos.Y), New Point(pos.X + 1, pos.Y), New Point(pos.X, pos.Y - 1), New Point(pos.X, pos.Y + 1)}
 
-        Return moves _
-            .Where(Function(e) e.X < maxX And e.X > -1) _
-            .Where(Function(e) e.Y > -1 And e.Y < maxY).ToList()
+        Return New List(Of Point)() From {New Point(pos.X - 1, pos.Y), New Point(pos.X + 1, pos.Y), New Point(pos.X, pos.Y - 1), New Point(pos.X, pos.Y + 1)} _
+          .Where(Function(e) e.X < Dots.Length And e.X > -1) _
+            .Where(Function(e) e.Y > -1 And e.Y < Dots.First().Length).ToList()
     End Function
 
     Public Function GetStartAndEndPoint() As (startPos As Point, endPos As Point)
         Dim start As Point = Nothing
         Dim ends As Point = Nothing
-        Dim func As Action(Of Integer, Integer) = Function(x, y)
-            If Dots(x)(y).StartPoint Then
-                If start <> Nothing Then
-                    Throw New Exception("Can't have multiple starts")
-                End If
-                start = New Point(x, y)
-            End If
-            If Dots(x)(y).EndPoint Then
-                If ends <> Nothing Then
-                    Throw New Exception("Can't have multiple ends")
-                End If
-                ends = New Point(x, y)
-            End If
-        End Function
+        Dim func As Action(Of Integer, Integer) = Sub(x, y)
+                                                      If Dots(x)(y).StartPoint Then
+                                                          If start <> Nothing Then
+                                                              Throw New Exception("Can't have multiple starts")
+                                                          End If
+                                                          start = New Point(x, y)
+                                                      End If
+                                                      If Dots(x)(y).EndPoint Then
+                                                          If ends <> Nothing Then
+                                                              Throw New Exception("Can't have multiple ends")
+                                                          End If
+                                                          ends = New Point(x, y)
+                                                      End If
+                                                  End Sub
 
         IterateThroughMap(func)
 
@@ -143,10 +140,6 @@ Class Map
 
         Return (start, ends)
     End Function
-
-
-
-
 
     Public Sub IterateThroughMap(ByRef func As Action(Of Integer, Integer))
         For x As Integer = 0 To Dots.Length - 1
