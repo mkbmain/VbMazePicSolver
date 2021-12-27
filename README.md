@@ -27,6 +27,6 @@ It solves mazes such as example included. works with pngs and exact colors pleas
 ## Example 3
 
 <p> Example 3:</p>
-<img title="" alt="Alt text" src="./Examples/braid2k.png" width = 350px>
+<img title="" alt="Alt text" src="./Examples/braid2k.png" width = 1000px>
 <p> Saves a result of:</p>
-<img title="" alt="Alt text" src="./Examples/braid2k-solution.png" width = 350px>
+<img title="" alt="Alt text" src="./Examples/braid2k-solution.png" width = 1000px>
