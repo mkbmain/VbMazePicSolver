@@ -45,7 +45,7 @@ Module Program
         For x As Integer = 0 To map.Length - 1
             For y As Integer = 0 To map.First().Length - 1
                 Dim dot As Dot = map(x)(y)
-                Console.SetCursorPosition(x, y)
+                Console.SetCursorPosition(x + 1, y + 1)
 
                 If dot.Wall Then
                     Console.BackgroundColor = ConsoleColor.White
