@@ -23,17 +23,17 @@ Class Map
     Private Sub LoadFromIamge(ByVal imagePath As String)
         Using image = New Bitmap(imagePath)
             Dots = Enumerable.Range(0, image.Size.Width).Select(Function(t) New Dot(image.Size.Height - 1) {}).ToArray()
-            Dim func As Action(Of Integer, Integer) = Sub(x, y)
-                                                          If image.GetPixel(x, y).R = 0 And image.GetPixel(x, y).G = 0 And image.GetPixel(x, y).B = 0 Then
-                                                              Dots(x)(y) = New Dot(True, New Point(x, y))
-                                                          ElseIf image.GetPixel(x, y).G > 0 And image.GetPixel(x, y).R < 255 And image.GetPixel(x, y).G <= 255 Then
-                                                              Dots(x)(y) = New Dot(False, New Point(x, y), True)
-                                                          ElseIf image.GetPixel(x, y).G < 255 And image.GetPixel(x, y).R > 0 And image.GetPixel(x, y).R <= 255 Then
-                                                              Dots(x)(y) = New Dot(False, New Point(x, y), False, True)
-                                                          Else
-                                                              Dots(x)(y) = New Dot(False, New Point(x, y))
-                                                          End If
-                                                      End Sub
+            Dim func As Action(Of Integer, Integer, Dot()()) = Sub(x, y, map)
+                                                                   If image.GetPixel(x, y).R = 0 And image.GetPixel(x, y).G = 0 And image.GetPixel(x, y).B = 0 Then
+                                                                       map(x)(y) = New Dot(True, New Point(x, y))
+                                                                   ElseIf image.GetPixel(x, y).G > 0 And image.GetPixel(x, y).R < 255 And image.GetPixel(x, y).G <= 255 Then
+                                                                       map(x)(y) = New Dot(False, New Point(x, y), True)
+                                                                   ElseIf image.GetPixel(x, y).G < 255 And image.GetPixel(x, y).R > 0 And image.GetPixel(x, y).R <= 255 Then
+                                                                       map(x)(y) = New Dot(False, New Point(x, y), False, True)
+                                                                   Else
+                                                                       map(x)(y) = New Dot(False, New Point(x, y))
+                                                                   End If
+                                                               End Sub
             IterateThroughMap(func)
         End Using
     End Sub
@@ -117,20 +117,20 @@ Class Map
     Public Function GetStartAndEndPoint() As (startPos As Point, endPos As Point)
         Dim start As Point = Nothing
         Dim ends As Point = Nothing
-        Dim func As Action(Of Integer, Integer) = Sub(x, y)
-                                                      If Dots(x)(y).StartPoint Then
-                                                          If start <> Nothing Then
-                                                              Throw New Exception("Can't have multiple starts")
-                                                          End If
-                                                          start = New Point(x, y)
-                                                      End If
-                                                      If Dots(x)(y).EndPoint Then
-                                                          If ends <> Nothing Then
-                                                              Throw New Exception("Can't have multiple ends")
-                                                          End If
-                                                          ends = New Point(x, y)
-                                                      End If
-                                                  End Sub
+        Dim func As Action(Of Integer, Integer, Dot()()) = Sub(x, y, map)
+                                                               If map(x)(y).StartPoint Then
+                                                                   If start <> Nothing Then
+                                                                       Throw New Exception("Can't have multiple starts")
+                                                                   End If
+                                                                   start = New Point(x, y)
+                                                               End If
+                                                               If map(x)(y).EndPoint Then
+                                                                   If ends <> Nothing Then
+                                                                       Throw New Exception("Can't have multiple ends")
+                                                                   End If
+                                                                   ends = New Point(x, y)
+                                                               End If
+                                                           End Sub
 
         IterateThroughMap(func)
 
@@ -141,10 +141,10 @@ Class Map
         Return (start, ends)
     End Function
 
-    Public Sub IterateThroughMap(ByRef func As Action(Of Integer, Integer))
+    Public Sub IterateThroughMap(ByRef func As Action(Of Integer, Integer, Dot()()))
         For x As Integer = 0 To Dots.Length - 1
             For y As Integer = 0 To Dots.First().Length - 1
-                func(x, y)
+                func(x, y, Dots)
             Next
         Next
     End Sub

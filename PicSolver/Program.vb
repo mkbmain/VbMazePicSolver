@@ -4,6 +4,7 @@ Imports System.IO
 
 Module Program
     Sub Main(args As String())
+        args = {"d:\"}
         If args.Length < 1 Then
             Console.WriteLine("a picture or directory containing png's needs to be a argument")
             Return
