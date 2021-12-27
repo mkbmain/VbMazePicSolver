@@ -38,7 +38,7 @@ Class Map
         End Using
     End Sub
 
-    Public Sub SaveSoultion(ByVal SavePath As String)
+    Public Sub SaveSoultion(ByVal savePath As String)
         If Solved = False Then
             Solve()
         End If
@@ -67,7 +67,7 @@ Class Map
                     End If
                 Next
             Next
-            image.Save(SavePath, System.Drawing.Imaging.ImageFormat.Png)
+            image.Save(savePath, System.Drawing.Imaging.ImageFormat.Png)
         End Using
     End Sub
 

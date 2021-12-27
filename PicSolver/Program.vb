@@ -4,7 +4,7 @@ Imports System
 Module Program
     Sub Main(args As String())
 #If DEBUG Then
-        args = {"D:\bigPic.png"}
+        args = {"D:\braid2k.png"}
 #End If
         If args.Length < 1 Then
             Console.WriteLine("Picture needs to be a argument")
