@@ -14,7 +14,7 @@ Namespace Extensions
         End Sub
 
         <Extension()>
-        Public Function GetAroundDot(Of T)(arrayOfArrays As IEnumerable(Of IEnumerable(Of T)), pos As Point) As List(Of Point)
+        Public Function GetAroundArrayOfArrays(Of T)(arrayOfArrays As IEnumerable(Of IEnumerable(Of T)), pos As Point) As List(Of Point)
 
             Return New List(Of Point)() From {New Point(pos.X - 1, pos.Y), New Point(pos.X + 1, pos.Y), New Point(pos.X, pos.Y - 1), New Point(pos.X, pos.Y + 1)} _
                 .Where(Function(e) e.X < arrayOfArrays.Count() And e.X > -1) _

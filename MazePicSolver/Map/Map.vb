@@ -40,7 +40,7 @@ Namespace Map
             While (endReached = False)
                 Dim dot = Me.GetDot(currentLoc)
                 dot.PathUsed = True
-                Dim allOptions = MapDots.GetAroundDot(currentLoc)
+                Dim allOptions = MapDots.GetAroundArrayOfArrays(currentLoc)
                 Dim forward = allOptions.Where(Function(e) Me.GetDot(e).Wall = False And Me.GetDot(e).PathUsed = False And Me.GetDot(e).DeadEnd = False).ToArray()
                 If (forward.Any() = False) Then
                     ' backTrackTime
