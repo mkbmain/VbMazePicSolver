@@ -4,6 +4,7 @@ Imports System.IO
 
 Module Program
     Sub Main(args As String())
+        args = {"D:\"}
         If args.Length < 1 Then
             Console.WriteLine("a picture or directory containing png's needs to be a argument")
             Return
@@ -27,8 +28,8 @@ Module Program
 
     Public Sub Run(ByVal imagePath As String)
         Dim newFileName As String = Helpers.ExtractFileName(imagePath).Split(".").First() + "-solution.png"
-        Dim outputFile As String = System.IO.Path.Combine(Helpers.ExtractDirectory(imagePath), newFileName)
+        Dim outputFile As String = Path.Combine(Helpers.ExtractDirectory(imagePath), newFileName)
         Dim map = New Map.Map(imagePath)
-        map.SaveSoultion(outputFile)
+        map.SaveSolution(outputFile)
     End Sub
 End Module

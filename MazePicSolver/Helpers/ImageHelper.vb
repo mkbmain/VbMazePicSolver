@@ -1,4 +1,6 @@
-﻿Imports System.Drawing
+﻿Imports System.Diagnostics.CodeAnalysis
+Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports MazePicSolver.Extensions
 Imports MazePicSolver.Map
 
@@ -6,6 +8,7 @@ Namespace Helpers
 
     Module ImageHelper
 
+        <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
         Public Function LoadMapDotsFromImage(ByVal imagePath As String) As MapDot()()
             Dim dots As MapDot()()
             Using image = New Bitmap(imagePath)
@@ -28,9 +31,10 @@ Namespace Helpers
         End Function
 
 
+        <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
         Public Sub SaveImage(ByVal map As MapDot()(), ByVal size As Size, ByVal savePath As String)
             Using image As New Bitmap(size.Width, size.Height)
-                Dim graphics As Graphics = System.Drawing.Graphics.FromImage(image)
+                Dim graphics As Graphics = Graphics.FromImage(image)
                 Dim blackPen As Pen = New Pen(Brushes.Black)
                 Dim whitePen As Pen = New Pen(Brushes.White)
                 Dim redPen As Pen = New Pen(Brushes.Red)
@@ -53,7 +57,7 @@ Namespace Helpers
                         End If
                     Next
                 Next
-                image.Save(savePath, System.Drawing.Imaging.ImageFormat.Png)
+                image.Save(savePath, ImageFormat.Png)
             End Using
         End Sub
 

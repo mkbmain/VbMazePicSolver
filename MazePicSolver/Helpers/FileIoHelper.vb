@@ -2,7 +2,6 @@ Imports System.IO
 
 Namespace Helpers
     Public Module FileIoHelper
-
         Private ReadOnly Property PathSeparatorCharacter() As Char
             Get
                 Return Path.Combine("4", "4").Replace("4", "").First()
