@@ -6,7 +6,7 @@ It solves mazes such as example included. works with pngs and exact colors only 
 <p> please note its not optimised to find the best path just a path that works in a brute force style\flood </p>
 
 # Pixels
-* white pixle represents a empty space
+* White pixle represents a empty space
 * Black pixle represents a wall
 * Green for start point
 * Red for end point
