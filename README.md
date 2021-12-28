@@ -1,15 +1,15 @@
 # VbPicSolver
 Missing VB again so why not 
 
-It solves mazes such as example included. works with pngs and exact colors only i.e green is 0,255,0.
+It solves mazes such as example included. works with pngs and exact colors only i.e green is 0,255,0 (RGB).
 
 <p> please note its not optimised to find the best path just a path that works in a brute force style\flood </p>
 
-
-<p>white pixle represents a empty space</p>
-<p>Black pixle represents a wall</p>
-<p>Green for start point</p>
-<p>red for end point</p>
+# Pixels
+* white pixle represents a empty space
+* Black pixle represents a wall
+* Green for start point
+* Red for end point
 
 ## Example 1
 <p> Example 1:</p>
