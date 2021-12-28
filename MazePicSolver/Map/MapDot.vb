@@ -47,7 +47,7 @@ Namespace Map
         End Property
 
 
-        Public Sub New(ByVal wall As Boolean, ByVal loc As Point, Optional ByVal startPoint As Boolean = False, Optional ByVal endPoint As Boolean = False)
+        Public Sub New(wall As Boolean, loc As Point, Optional startPoint As Boolean = False, Optional endPoint As Boolean = False)
             IsWall = wall
             MyLocation = loc
             IsStartPoint = startPoint

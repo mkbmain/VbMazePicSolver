@@ -5,7 +5,7 @@ Namespace Extensions
     ' overkill I know but wanted to play with extensions and generics in VB
     Public Module IterateMethods
         <Extension()>
-        Public Sub IterateThroughMap(Of T)(ByRef arrayOfArrays As IEnumerable(Of IEnumerable(Of T)), ByRef func As Action(Of Integer, Integer, T()()))
+        Public Sub IterateThroughMap(Of T)(ByRef arrayOfArrays As IEnumerable(Of IEnumerable(Of T)), func As Action(Of Integer, Integer, T()()))
             For x As Integer = 0 To arrayOfArrays.Count() - 1
                 For y As Integer = 0 To arrayOfArrays.First().Count() - 1
                     func(x, y, arrayOfArrays)

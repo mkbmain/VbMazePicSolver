@@ -8,7 +8,7 @@ Module Program
             Console.WriteLine("a picture or directory containing png's needs to be a argument")
             Return
         End If
-        Dim paths As String() = {}
+        Dim paths As String() = Array.Empty(Of String)()
         Dim path As String = String.Join(" ", args)
         If (Directory.Exists(path)) Then
             paths = Directory.GetFiles(path).Where(Function(t) t.ToLower().EndsWith(".png") Or t.ToLower().EndsWith(".jpg") Or t.ToLower().EndsWith(".bmp")) _

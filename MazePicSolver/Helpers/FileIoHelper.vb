@@ -8,10 +8,10 @@ Namespace Helpers
             End Get
         End Property
 
-        Public Function ExtractDirectory(ByVal path As String) As String
+        Public Function ExtractDirectory(path As String) As String
             Return String.Join(PathSeparatorCharacter, path.Split(PathSeparatorCharacter).Take(path.Split(PathSeparatorCharacter).Length - 1))
         End Function
-        Public Function ExtractFileName(ByVal path As String) As String
+        Public Function ExtractFileName(path As String) As String
             Return path.Split(PathSeparatorCharacter).Last()
         End Function
     End Module

@@ -9,7 +9,7 @@ Namespace Helpers
     Module ImageHelper
 
         <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
-        Public Function LoadMapDotsFromImage(ByVal imagePath As String) As MapDot()()
+        Public Function LoadMapDotsFromImage(imagePath As String) As MapDot()()
             Dim dots As MapDot()()
             Using image = New Bitmap(imagePath)
                 dots = Enumerable.Range(0, image.Size.Width).Select(Function(t) New MapDot(image.Size.Height - 1) {}).ToArray()
@@ -32,17 +32,17 @@ Namespace Helpers
 
 
         <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
-        Public Sub SaveImage(ByVal map As MapDot()(), ByVal size As Size, ByVal savePath As String)
+        Public Sub SaveImage(map As MapDot()(), size As Size, savePath As String)
             Using image As New Bitmap(size.Width, size.Height)
                 Dim graphics As Graphics = Graphics.FromImage(image)
-                Dim blackPen As Pen = New Pen(Brushes.Black)
-                Dim whitePen As Pen = New Pen(Brushes.White)
-                Dim redPen As Pen = New Pen(Brushes.Red)
+                Dim blackPen = New Pen(Brushes.Black)
+                Dim whitePen = New Pen(Brushes.White)
+                Dim redPen = New Pen(Brushes.Red)
 
                 For x As Integer = 0 To size.Width - 1
                     For y As Integer = 0 To size.Height - 1
                         Dim mapDot As MapDot = map(x)(y)
-                        Dim point As Point = New Point(x, y)
+                        Dim point = New Point(x, y)
                         Dim rectangle = New Rectangle(point, New Size(1, 1))
 
                         If mapDot.Wall Then
