@@ -11,7 +11,8 @@ Module Program
         Dim paths As String() = {}
         Dim path As String = String.Join(" ", args)
         If (Directory.Exists(path)) Then
-            paths = Directory.GetFiles(path).Where(Function(t) t.ToLower().EndsWith(".png") Or t.ToLower().EndsWith(".jpg") Or t.ToLower().EndsWith(".bmp")).ToArray()
+            paths = Directory.GetFiles(path).Where(Function(t) t.ToLower().EndsWith(".png") Or t.ToLower().EndsWith(".jpg") Or t.ToLower().EndsWith(".bmp")) _
+                .Where(Function(t) Helpers.ExtractFileName(t).ToLower().Contains("-solution") = False).ToArray()
         ElseIf File.Exists(path) Then
             paths = {path}
         End If
@@ -25,9 +26,9 @@ Module Program
     End Sub
 
     Public Sub Run(ByVal imagePath As String)
-        Dim newFileName As String = ExtractFileName(imagePath).Split(".").First() + "-solution.png"
-        Dim outputFile As String = System.IO.Path.Combine(ExtractDirectory(imagePath), newFileName)
-        Dim map = New Map(imagePath)
+        Dim newFileName As String = Helpers.ExtractFileName(imagePath).Split(".").First() + "-solution.png"
+        Dim outputFile As String = System.IO.Path.Combine(Helpers.ExtractDirectory(imagePath), newFileName)
+        Dim map = New Map.Map(imagePath)
         map.SaveSoultion(outputFile)
     End Sub
 End Module
