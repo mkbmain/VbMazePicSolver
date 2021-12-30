@@ -13,6 +13,12 @@ Namespace Map
             End Get
         End Property
         Public Property DeadEnd() As Boolean = False
+        Private Property EverBeen() As Boolean = False
+        Public ReadOnly Property EverBeenUsed() As Boolean
+            Get
+                Return EverBeen
+            End Get
+        End Property
         Private Property Used() As Boolean = False
         Public Property PathUsed() As Boolean
             Get
@@ -23,6 +29,9 @@ Namespace Map
                     Return
                 End If
                 Used = Value
+                If Value Then
+                    EverBeen = Value
+                End If
             End Set
         End Property
         Private Property IsStartPoint() As Boolean = False

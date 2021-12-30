@@ -32,10 +32,11 @@ Namespace Helpers
 
 
         <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
-        Public Sub SaveImage(map As MapDot()(), size As Size, savePath As String)
+        Public Sub SaveImage(map As MapDot()(), size As Size, savePath As String, Optional showWorking As Boolean = False)
             Using image As New Bitmap(size.Width, size.Height)
                 Dim graphics As Graphics = Graphics.FromImage(image)
                 Dim blackPen = New Pen(Brushes.Black)
+                Dim yellowPen = New Pen(Brushes.Yellow)
                 Dim whitePen = New Pen(Brushes.White)
                 Dim redPen = New Pen(Brushes.Red)
 
@@ -44,21 +45,25 @@ Namespace Helpers
                         Dim mapDot As MapDot = map(x)(y)
                         Dim point = New Point(x, y)
                         Dim rectangle = New Rectangle(point, New Size(1, 1))
-
                         If mapDot.Wall Then
-                            graphics.FillRectangle(Brushes.Black, rectangle)
-                            graphics.DrawRectangle(blackPen, rectangle)
+                            DrawPixel(graphics, blackPen, rectangle)
                         ElseIf mapDot.PathUsed Or mapDot.EndPoint Then
-                            graphics.FillRectangle(Brushes.Red, rectangle)
-                            graphics.DrawRectangle(redPen, rectangle)
+                            DrawPixel(graphics, redPen, rectangle)
+                        ElseIf mapDot.EverBeenUsed And showWorking Then
+                            DrawPixel(graphics, yellowPen, rectangle)
                         Else
-                            graphics.FillRectangle(Brushes.White, rectangle)
-                            graphics.DrawRectangle(whitePen, rectangle)
+                            DrawPixel(graphics, whitePen, rectangle)
                         End If
                     Next
                 Next
                 image.Save(savePath, ImageFormat.Png)
             End Using
+        End Sub
+
+        <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
+        Private Sub DrawPixel(graphic As Graphics, pen As Pen, rectangle As Rectangle)
+            graphic.FillRectangle(pen.Brush, rectangle)
+            graphic.DrawRectangle(pen, rectangle)
         End Sub
 
     End Module

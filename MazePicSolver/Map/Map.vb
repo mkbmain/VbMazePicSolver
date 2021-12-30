@@ -23,11 +23,11 @@ Namespace Map
             Return MapDots(x)(y)
         End Function
 
-        Public Sub SaveSolution(savePath As String)
+        Public Sub SaveSolution(savePath As String, showWorking As Boolean)
             If Solved = False Then
                 Solve()
             End If
-            Helpers.SaveImage(MapDots, Size, savePath)
+            Helpers.SaveImage(MapDots, Size, savePath, showWorking)
         End Sub
 
         Public Sub Solve()
