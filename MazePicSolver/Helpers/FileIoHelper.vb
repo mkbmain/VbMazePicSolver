@@ -2,9 +2,14 @@ Imports System.IO
 
 Namespace Helpers
     Public Module FileIoHelper
+        Private _pathSeparator As Char = Nothing
         Private ReadOnly Property PathSeparatorCharacter() As Char
             Get
-                Return Path.Combine("4", "4").Replace("4", "").First()
+                If _pathSeparator <> Nothing Then
+                    Return _pathSeparator
+                End If
+                _pathSeparator = Path.Combine(" ", " ").Trim().First()
+                Return _pathSeparator
             End Get
         End Property
 
