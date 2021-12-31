@@ -7,8 +7,6 @@ Imports MazePicSolver.Map
 Namespace Helpers
 
     Module ImageHelper
-
-        <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
         Public Function LoadMapDotsFromImage(imagePath As String) As MapDot()()
             Dim dots As MapDot()()
             Using image = New Bitmap(imagePath)
@@ -30,8 +28,6 @@ Namespace Helpers
             Return dots
         End Function
 
-
-        <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
         Public Sub SaveImage(map As MapDot()(), size As Size, savePath As String, Optional showWorking As Boolean = False)
             Using image As New Bitmap(size.Width, size.Height)
                 Dim graphics As Graphics = Graphics.FromImage(image)
@@ -60,7 +56,6 @@ Namespace Helpers
             End Using
         End Sub
 
-        <SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification:="<Pending>")>
         Private Sub DrawPixel(graphic As Graphics, pen As Pen, rectangle As Rectangle)
             graphic.FillRectangle(pen.Brush, rectangle)
             graphic.DrawRectangle(pen, rectangle)
