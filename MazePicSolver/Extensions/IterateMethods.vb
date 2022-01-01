@@ -7,7 +7,7 @@ Namespace Extensions
         <Extension()>
         Public Sub IterateThroughMap(Of T)(ByRef arrayOfArrays As IEnumerable(Of IEnumerable(Of T)), func As Action(Of Integer, Integer, T()()))
             For x As Integer = 0 To arrayOfArrays.Count() - 1
-                For y As Integer = 0 To arrayOfArrays.First().Count() - 1
+                For y As Integer = 0 To arrayOfArrays(x).Count() - 1
                     func(x, y, arrayOfArrays)
                 Next
             Next
