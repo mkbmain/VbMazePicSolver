@@ -10,21 +10,14 @@ namespace MazePicSolverCSharp
         public static MapDot[][] LoadMapDotsFromImage(string imagePath)
         {
             MapDot[][] dots;
-            List<Color> r = new List<Color>();
             using (var image = new Bitmap(imagePath))
             {
-                dots = Enumerable.Range(0, image.Size.Width).Select(t => new MapDot[image.Size.Height - 1]).ToArray();
-
+                dots = Enumerable.Range(0, image.Size.Width).Select(t => new MapDot[image.Size.Height ]).ToArray();
 
 
                 dots.IterateThroughMap((x, y, map) =>
                 {
-                    if (x == 14)
-                    {
-                        var b= true;
-                    }
                     var pixel = image.GetPixel(x, y);
-                    r.Add(pixel);
                     if (pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
                     {
                         map[x][y] = new MapDot(true, new Point(x, y));
@@ -43,8 +36,7 @@ namespace MazePicSolverCSharp
                     }
                 });
             }
-
-            var ber = r.Distinct().ToArray();
+            
             return dots;
         }
 
