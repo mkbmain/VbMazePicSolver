@@ -36,8 +36,8 @@ Namespace Map
             End If
             Dim positions = GetStartAndEndPoint()
             Dim currentLoc = positions.startPos
-            Dim endReached = False
-            While (endReached = False)
+
+            While (Solved = False)
                 Dim dot = GetDot(currentLoc)
                 dot.PathUsed = True
                 Dim allOptions = MapDots.GetAroundArrayOfArrays(currentLoc)
@@ -57,10 +57,8 @@ Namespace Map
                 Dim nextDot = GetDot(forward.First())
                 nextDot.PreviousLocation = dot.Location
                 If nextDot.EndPoint Then
-                    endReached = True
                     Solved = True
                 Else
-
                     currentLoc = nextDot.Location
                 End If
             End While
