@@ -16,6 +16,7 @@ Namespace Helpers
         Public Function ExtractDirectory(path As String) As String
             Return String.Join(PathSeparatorCharacter, path.Split(PathSeparatorCharacter).Take(path.Split(PathSeparatorCharacter).Length - 1))
         End Function
+
         Public Function ExtractFileName(path As String) As String
             Return path.Split(PathSeparatorCharacter).Last()
         End Function
