@@ -13,11 +13,11 @@ Namespace Helpers
                 dots = Enumerable.Range(0, image.Size.Width).Select(Function(t) New MapDot(image.Size.Height - 1) {}).ToArray()
                 ' this style looks a lot nicer in c# and I know the image will box of the heap but minor slow down and small price to pay for dryness
                 dots.IterateThroughMap(Sub(x, y, map)
-                                           If image.GetPixel(x, y).R = 0 And image.GetPixel(x, y).G = 0 And image.GetPixel(x, y).B = 0 Then
+                                           If image.GetPixel(x, y).R = 0 AndAlso image.GetPixel(x, y).G = 0 AndAlso image.GetPixel(x, y).B = 0 Then
                                                map(x)(y) = New MapDot(True, New Point(x, y))
-                                           ElseIf image.GetPixel(x, y).G > 0 And image.GetPixel(x, y).R < 255 And image.GetPixel(x, y).G <= 255 Then
+                                           ElseIf image.GetPixel(x, y).G > 0 AndAlso image.GetPixel(x, y).R < 255 AndAlso image.GetPixel(x, y).G <= 255 Then
                                                map(x)(y) = New MapDot(False, New Point(x, y), True)
-                                           ElseIf image.GetPixel(x, y).G < 255 And image.GetPixel(x, y).R > 0 And image.GetPixel(x, y).R <= 255 Then
+                                           ElseIf image.GetPixel(x, y).G < 255 AndAlso image.GetPixel(x, y).R > 0 AndAlso image.GetPixel(x, y).R <= 255 Then
                                                map(x)(y) = New MapDot(False, New Point(x, y), False, True)
                                            Else
                                                map(x)(y) = New MapDot(False, New Point(x, y))
@@ -44,7 +44,7 @@ Namespace Helpers
                             DrawPixel(graphics, blackPen, rectangle)
                         ElseIf mapDot.PathUsed Or mapDot.EndPoint Then
                             DrawPixel(graphics, redPen, rectangle)
-                        ElseIf mapDot.EverBeenUsed And showWorking Then
+                        ElseIf mapDot.EverBeenUsed AndAlso showWorking Then
                             DrawPixel(graphics, yellowPen, rectangle)
                         Else
                             DrawPixel(graphics, whitePen, rectangle)
