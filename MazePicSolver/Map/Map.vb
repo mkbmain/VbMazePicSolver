@@ -6,6 +6,7 @@ Namespace Map
     Class Map
         Private Property MapDots As MapDot()()
         Private Property Solved As Boolean
+
         Sub New(imagePath As String)
             MapDots = Helpers.LoadMapDotsFromImage(imagePath)
         End Sub
@@ -19,14 +20,13 @@ Namespace Map
         Public Function GetDot(point As Point) As MapDot
             Return GetDot(point.X, point.Y)
         End Function
+
         Public Function GetDot(x As Integer, y As Integer) As MapDot
             Return MapDots(x)(y)
         End Function
 
         Public Sub SaveSolution(savePath As String, showWorking As Boolean)
-            If Solved = False Then
-                Solve()
-            End If
+            Solve()
             Helpers.SaveImage(MapDots, Size, savePath, showWorking)
         End Sub
 
@@ -64,26 +64,24 @@ Namespace Map
             End While
         End Sub
 
-
         Public Function GetStartAndEndPoint() As (startPos As Point, endPos As Point)
             Dim start As Point = Nothing
             Dim ends As Point = Nothing
-            Dim func As Action(Of Integer, Integer, MapDot()()) = Sub(x, y, map)
-                                                                      If map(x)(y).StartPoint Then
-                                                                          If start <> Nothing Then
-                                                                              Throw New Exception("Can't have multiple starts")
-                                                                          End If
-                                                                          start = New Point(x, y)
-                                                                      End If
-                                                                      If map(x)(y).EndPoint Then
-                                                                          If ends <> Nothing Then
-                                                                              Throw New Exception("Can't have multiple ends")
-                                                                          End If
-                                                                          ends = New Point(x, y)
-                                                                      End If
-                                                                  End Sub
 
-            MapDots.IterateThroughMap(func)
+            MapDots.IterateThroughMap(Sub(x, y, map)
+                                          If map(x)(y).StartPoint Then
+                                              If start <> Nothing Then
+                                                  Throw New Exception("Can't have multiple starts")
+                                              End If
+                                              start = New Point(x, y)
+                                          End If
+                                          If map(x)(y).EndPoint Then
+                                              If ends <> Nothing Then
+                                                  Throw New Exception("Can't have multiple ends")
+                                              End If
+                                              ends = New Point(x, y)
+                                          End If
+                                      End Sub)
 
             If start = Nothing Or ends = Nothing Then
                 Throw New Exception("no start or end found")
