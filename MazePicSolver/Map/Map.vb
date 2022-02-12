@@ -41,7 +41,7 @@ Namespace Map
                 Dim dot = GetDot(currentLoc)
                 dot.PathUsed = True
                 Dim allOptions = MapDots.GetAroundArrayOfArrays(currentLoc)
-                Dim forward = allOptions.Where(Function(e) GetDot(e).Wall = False And GetDot(e).PathUsed = False And GetDot(e).DeadEnd = False).ToArray()
+                Dim forward = allOptions.Where(Function(e) GetDot(e).Wall = False AndAlso GetDot(e).PathUsed = False AndAlso GetDot(e).DeadEnd = False).ToArray()
                 If (forward.Any() = False) Then
                     ' backTrackTime
                     If dot.StartPoint Then
