@@ -49,8 +49,9 @@ namespace MazePicSolverCSharp
         public static void Run(string imagePath, bool showWorking) {
             string newFileName = (FileIoHelper.ExtractFileName(imagePath).Split('.').First() + "-solution.png");
             string outputFile = Path.Combine(FileIoHelper.ExtractDirectory(imagePath), newFileName);
-            var map = new Map(imagePath);
-            map.SaveSolution(outputFile, showWorking);
+            var map = new Map(imagePath); 
+            map.BruteForceSaveSolution(outputFile.Replace("-solution","Brute-solution"), showWorking);
+            map.MostDirectRouteSolveSaveSolution(outputFile);
         }
         
     }

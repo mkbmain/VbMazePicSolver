@@ -2,8 +2,16 @@ using System.Drawing;
 
 public class MapDot
 {
+    public void Reset()
+    {
+        PreviousLocation = Point.Empty;
+        ShortestFromStart = 0;
+        DeadEnd = false;
+        Used = false;
+    }
     public Point PreviousLocation { get; set; }
     public Point Location { get; }
+    public uint ShortestFromStart { get; set; } = 0;
     public bool DeadEnd { get; set; } = false;
     public bool EverBeenUsed { get; set; }
     public bool Wall { get; }
@@ -18,7 +26,7 @@ public class MapDot
         this.EndPoint = endPoint;
         this.StartPoint = startPoint;
     }
-    
+
     public bool PathUsed
     {
         get => Used;

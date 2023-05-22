@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -14,24 +15,58 @@ namespace MazePicSolverCSharp
         {
             MapDots = ImagerHelpers.LoadMapDotsFromImage(imagePath);
         }
-        
-        public MapDot GetDot(Point point)
-        {
-            return this.GetDot(point.X, point.Y);
-        }
 
-        public MapDot GetDot(int x, int y)
+        public void BruteForceSaveSolution(string savePath, bool showWorking)
         {
-            return MapDots[x][y];
-        }
-
-        public void SaveSolution(string savePath, bool showWorking)
-        {
-            this.Solve();
+            MapDots.IterateThroughMap((x, y, mapDots) => mapDots[x][y].Reset());
+            this.BruteForceSolve();
             ImagerHelpers.SaveImage(MapDots, Size, savePath, showWorking);
         }
 
-        public void Solve()
+        public void MostDirectRouteSolveSaveSolution(string savePath)
+        {
+            MapDots.IterateThroughMap((x, y, mapDots) => mapDots[x][y].Reset());
+            var (startPoint, endPoint) = GetStartAndEndPoint();
+            var end = MapDots[endPoint.X][endPoint.Y];
+            var currentOptions = new List<Point>() { startPoint };
+            uint steps = 0;
+            while (end.ShortestFromStart == 0)
+            {
+                steps++;
+                var newOptions = currentOptions.SelectMany(q => MapDots.GetAroundArrayOfArrays(q)
+                        .Where(w => !MapDots.GetPoint(w).Wall && MapDots.GetPoint(w).ShortestFromStart == 0 &&
+                                    MapDots.GetPoint(w).StartPoint == false))
+                    .Distinct().ToList();
+                if (newOptions.Count == 0)
+                {
+                    break;
+                }
+
+                Console.WriteLine($"{steps} -- {newOptions.Count}");
+                foreach (var item in newOptions)
+                    MapDots.GetPoint(item).ShortestFromStart = steps;
+
+
+                currentOptions = newOptions;
+            }
+
+            if (end.ShortestFromStart != 0)
+            {
+                var currentPoint = endPoint;
+                var lookFor = MapDots.GetPoint(currentPoint).ShortestFromStart - 1;
+                while (lookFor != 0)
+                {
+                    currentPoint = MapDots.GetAroundArrayOfArrays(currentPoint).First(q =>
+                        MapDots.GetPoint(q).ShortestFromStart == lookFor);
+                    lookFor--;
+                    MapDots.GetPoint(currentPoint).PathUsed = true;
+                }
+            }
+
+            ImagerHelpers.SaveImage(MapDots, Size, savePath);
+        }
+
+        private void BruteForceSolve()
         {
             if (Solved)
             {
@@ -43,10 +78,12 @@ namespace MazePicSolverCSharp
 
             while (!Solved)
             {
-                var dot = GetDot(currentloc);
+                var dot = MapDots.GetPoint(currentloc);
                 dot.PathUsed = true;
-                var allOptions = MapDots.GetAroungArrayOfArrays(currentloc);
-                var forward = allOptions.Where(t => !GetDot(t).PathUsed && !GetDot(t).Wall && !GetDot(t).DeadEnd)
+                var allOptions = MapDots.GetAroundArrayOfArrays(currentloc);
+                var forward = allOptions.Where(t =>
+                        !MapDots.GetPoint(t).PathUsed && !MapDots.GetPoint(t).Wall &&
+                        !MapDots.GetPoint(t).DeadEnd)
                     .ToArray();
 
                 if (!forward.Any())
@@ -62,7 +99,7 @@ namespace MazePicSolverCSharp
                     continue;
                 }
 
-                var nextDot = GetDot(forward.First());
+                var nextDot = MapDots.GetPoint(forward.First());
                 nextDot.PreviousLocation = dot.Location;
                 if (nextDot.EndPoint)
                 {
@@ -72,7 +109,6 @@ namespace MazePicSolverCSharp
                 {
                     currentloc = nextDot.Location;
                 }
-
             }
         }
 
@@ -80,25 +116,26 @@ namespace MazePicSolverCSharp
         {
             Point? start = null;
             Point? end = null;
-            
+
             MapDots.IterateThroughMap((x, y, map) =>
             {
                 if (map[x][y].StartPoint)
                 {
-                    if (start!=null)
+                    if (start != null)
                     {
                         throw new Exception("Can't have multiple starts");
-
                     }
+
                     start = new Point(x, y);
                 }
+
                 if (map[x][y].EndPoint)
                 {
-                    if (end!=null)
+                    if (end != null)
                     {
                         throw new Exception("Can't have multiple starts");
-
                     }
+
                     end = new Point(x, y);
                 }
             });

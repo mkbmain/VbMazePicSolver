@@ -12,7 +12,7 @@ namespace MazePicSolverCSharp
             MapDot[][] dots;
             using (var image = new Bitmap(imagePath))
             {
-                dots = Enumerable.Range(0, image.Size.Width).Select(t => new MapDot[image.Size.Height ]).ToArray();
+                dots = Enumerable.Range(0, image.Size.Width).Select(t => new MapDot[image.Size.Height]).ToArray();
 
 
                 dots.IterateThroughMap((x, y, map) =>
@@ -36,7 +36,7 @@ namespace MazePicSolverCSharp
                     }
                 });
             }
-            
+
             return dots;
         }
 
@@ -66,7 +66,7 @@ namespace MazePicSolverCSharp
                         {
                             DrawPixel(graphics, blackPen, rectangle);
                         }
-                        else if ((mapDot.PathUsed || mapDot.EndPoint))
+                        else if ((mapDot.PathUsed  || mapDot.EndPoint))
                         {
                             DrawPixel(graphics, redPen, rectangle);
                         }
