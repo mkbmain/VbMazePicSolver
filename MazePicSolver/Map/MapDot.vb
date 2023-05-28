@@ -5,7 +5,16 @@ Namespace Map
     ''' So called as its one pixel
     ''' </summary>
     Class MapDot
+
+        Public Sub Reset()
+            PreviousLocation = Point.Empty
+            ShortestFromStart = 0
+            DeadEnd = False
+            Used = False
+        End Sub
+
         Public Property PreviousLocation() As Point
+        Public Property ShortestFromStart As Integer
         Public Property DeadEnd() As Boolean = False
         Private Property EverBeen() As Boolean = False
         Private Property MyLocation() As Point

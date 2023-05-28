@@ -64,6 +64,48 @@ Namespace Map
             End While
         End Sub
 
+        Public Sub MapDirectRouteSolveSaveSolution(savePath As String)
+            MapDots.IterateThroughMap(Sub(x, y, mapDots) mapDots(x)(y).Reset())
+            Dim positions = GetStartAndEndPoint()
+            Dim endDot As MapDot = MapDots(positions.endPos.X)(positions.endPos.Y)
+            Dim currentOptions = New List(Of Point) From {
+                positions.startPos
+            }
+            Dim steps As UInteger
+            While endDot.ShortestFromStart = 0
+                steps = steps + 1
+                Dim options = currentOptions.SelectMany(Function(e) MapDots.GetAroundArrayOfArrays(e).
+                                                            Where(Function(w)
+                                                                      Dim point As MapDot = MapDots.GetPoint(w)
+                                                                      Return point.Wall = False AndAlso
+                                                                      point.ShortestFromStart = 0 AndAlso
+                                                                      point.StartPoint = False
+                                                                  End Function)).Distinct().ToList()
+
+                If (options.Any() = False) Then
+                    Exit While
+                End If
+
+                For Each item In options
+                    MapDots.GetPoint(item).ShortestFromStart = steps
+                Next
+
+                currentOptions = options
+            End While
+
+            If endDot.ShortestFromStart <> 0 Then
+                Dim current = positions.endPos
+                Dim lookfor = MapDots.GetPoint(current).ShortestFromStart - 1
+                While lookfor > 0
+                    current = MapDots.GetAroundArrayOfArrays(current).First(Function(q) MapDots.GetPoint(q).ShortestFromStart = lookfor)
+                    lookfor = lookfor - 1
+                    MapDots.GetPoint(current).PathUsed = True
+                End While
+
+                Helpers.SaveImage(MapDots, Size, savePath)
+            End If
+        End Sub
+
         Public Function GetStartAndEndPoint() As (startPos As Point, endPos As Point)
             Dim start As Point = Nothing
             Dim ends As Point = Nothing
