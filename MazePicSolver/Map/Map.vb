@@ -25,7 +25,7 @@ Namespace Map
             Return MapDots(x)(y)
         End Function
 
-        Public Sub SaveSolution(savePath As String, showWorking As Boolean)
+        Public Sub BruteForceSaveSolution(savePath As String, showWorking As Boolean)
             Solve()
             Helpers.SaveImage(MapDots, Size, savePath, showWorking)
         End Sub
@@ -68,21 +68,17 @@ Namespace Map
             MapDots.IterateThroughMap(Sub(x, y, mapDots) mapDots(x)(y).Reset())
             Dim positions = GetStartAndEndPoint()
             Dim endDot As MapDot = MapDots(positions.endPos.X)(positions.endPos.Y)
-            Dim currentOptions = New List(Of Point) From {
-                positions.startPos
-            }
+            Dim currentOptions = New List(Of Point) From {positions.startPos}
             Dim steps As UInteger
             While endDot.ShortestFromStart = 0
                 steps = steps + 1
                 Dim options = currentOptions.SelectMany(Function(e) MapDots.GetAroundArrayOfArrays(e).
-                                                            Where(Function(w)
-                                                                      Dim point As MapDot = MapDots.GetPoint(w)
-                                                                      Return point.Wall = False AndAlso
-                                                                      point.ShortestFromStart = 0 AndAlso
-                                                                      point.StartPoint = False
-                                                                  End Function)).Distinct().ToList()
+                                                            Where(Function(w) MapDots.GetPoint(w).Wall = False AndAlso
+                                                                       MapDots.GetPoint(w).ShortestFromStart = 0 AndAlso
+                                                                       MapDots.GetPoint(w).StartPoint = False
+                                                                  )).Distinct().ToList()
 
-                If (options.Any() = False) Then
+                If options.Count = 0 Then
                     Exit While
                 End If
 

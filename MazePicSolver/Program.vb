@@ -35,6 +35,7 @@ Module Program
         Dim newFileName As String = Helpers.ExtractFileName(imagePath).Split(".").First() + "-solution.png"
         Dim outputFile As String = Path.Combine(Helpers.ExtractDirectory(imagePath), newFileName)
         Dim map = New Map.Map(imagePath)
-        map.SaveSolution(outputFile, showWorking)
+        map.BruteForceSaveSolution(outputFile.Replace("-solution", "Brute-solution"), showWorking)
+        map.MapDirectRouteSolveSaveSolution(outputFile)
     End Sub
 End Module
