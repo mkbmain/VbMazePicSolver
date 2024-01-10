@@ -36,3 +36,6 @@ It solves mazes such as example included. works with pngs and exact colors only 
 <img title="" alt="Alt text" src="./Examples/braid2k-solution.png" width = 1000px>
 <p> Saves result with ShowWorking flag set to true :</p>
 <img title="" alt="Alt text" src="./Examples/braid2k-solution-WithWorking.png" width = 1000px>
+
+<p>With the direct Route</p>
+<img title="" alt="Alt text" src="./Examples/braid2k-solution-Direct.png" width="1000px">
