@@ -8,7 +8,6 @@ namespace MazePicSolverCSharp
     {
         public static void Main(string[] args)
         {
-            args = new[] { @"C:\Pic" }; 
             if (args.Length < 1)
             {
                 Console.WriteLine("a picture or directory containing png's needs to be a argument");
